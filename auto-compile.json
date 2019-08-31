@@ -1,0 +1,29 @@
+{
+    "config-file":"Configuration.h",
+    "compile-profile":
+    [
+        {
+            "profile-name": "ender-3",
+            "keyword": 
+            [
+               {"find":"//#define ENDER3","replace":"#define ENDER3"}
+            ]
+        },
+        {
+            "profile-name": "cr-10",
+            "keyword": 
+            [
+                {"find":"//#define CR10","replace":"#define CR10"}
+                
+            ]
+        },
+        {
+            "profile-name": "cr-10-ezabl-oem",
+            "keyword": 
+            [
+                {"find":"//#define CR10","replace":"#define CR10"},
+                {"find":"//#define CR10_OEM","replace":"#define CR10_OEM"}
+            ]
+        }
+    ]
+}
