@@ -10,14 +10,6 @@
             ]
         },
         {
-            "profile-name": "cr-10",
-            "keyword": 
-            [
-                {"find":"//#define CR10","replace":"#define CR10"}
-                
-            ]
-        },
-        {
             "profile-name": "cr-10-ezabl-oem",
             "keyword": 
             [
