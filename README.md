@@ -3,7 +3,7 @@
 ## How this script works
 
 - This script will read <code>auto-compile.json</code> and complie the firmware base on <code>auto-compile.json</code> content.
-- Output firmware binary file will be copy to <code>Auto-compile-output/your-machine-name-here.firmware.bin</code>
+- Output firmware binary file will be copy to <code>Auto-compile-output/your-machine-name-here/firmware.bin</code>
 
 ## Requiment (LINUX)
 
