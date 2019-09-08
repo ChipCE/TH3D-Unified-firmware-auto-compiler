@@ -6,7 +6,7 @@ import sys
 MARLIN_PATH = "Marlin/"
 AUTO_COMPILE_DIR = "Auto-compile-output/"
 ENVI_NAME = "LPC1769"
-AUTO_COMPILE_VERSION = "v0.2.3p"
+AUTO_COMPILE_VERSION = "v0.2.4p"
 DEBUG = False
 SAVE_CONFIG_FILE = True
 
