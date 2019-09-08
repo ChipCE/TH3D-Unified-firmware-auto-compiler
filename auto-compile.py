@@ -100,9 +100,12 @@ try:
         print("Restore the original "+configFile)
         saveFile(MARLIN_PATH+configFile,configFileData)
         print("Cleanup build folder...")
-        shutil.rmtree(".pioenvs")
-        shutil.rmtree(".piolib")
-        shutil.rmtree(".piolibdeps")
+        try:
+            shutil.rmtree(".pioenvs")
+            shutil.rmtree(".piolib")
+            shutil.rmtree(".piolibdeps")
+        except:
+            pass
         print("Done :3")
         print("Press ENTER to exit.")
         input()
@@ -112,6 +115,13 @@ except IOError as err:
     print("Restore the original "+configFile)
     if configFileData != "":
         saveFile(MARLIN_PATH+configFile,configFileData)
+    print("Cleanup build folder...")
+    try:
+        shutil.rmtree(".pioenvs")
+        shutil.rmtree(".piolib")
+        shutil.rmtree(".piolibdeps")
+    except:
+        pass
     print("Press ENTER to exit.")
     input()
     exit(1)
