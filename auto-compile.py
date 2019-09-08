@@ -6,7 +6,7 @@ import sys
 MARLIN_PATH = "Marlin/"
 AUTO_COMPILE_DIR = "Auto-compile-output/"
 ENVI_NAME = "LPC1769"
-AUTO_COMPILE_VERSION = "v0.2.4p"
+AUTO_COMPILE_VERSION = "v0.2.5p"
 DEBUG = False
 SAVE_CONFIG_FILE = True
 
@@ -28,6 +28,14 @@ def saveFile(fileName,fileData):
 #########################################################################
 
 print("TH3D Unified firmware auto compiler " + AUTO_COMPILE_VERSION)
+
+# clear the old build folders
+try:
+    shutil.rmtree(".pioenvs")
+    shutil.rmtree(".piolib")
+    shutil.rmtree(".piolibdeps")
+except:
+    pass
 
 try:
     with open('auto-compile.json', 'r') as f:
@@ -56,7 +64,7 @@ print("Target config file : " + configFile)
 
 # loop through each profile
 try:
-    print("# Trying to read target config file : " + config['config-file'])
+    print("# Trying to read target config file : " + MARLIN_PATH + config['config-file'])
     with open(MARLIN_PATH+configFile, 'r') as file :
         configFileData = file.read()
         #originalConfigFileData = configFileData
