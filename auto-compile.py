@@ -58,7 +58,7 @@ except FileExistsError:
     # directory already exists
     pass
 
-# get the terget file name from config
+# get the target file name from config
 configFile = config['config-file']
 print("Target config file : " + configFile)
 
@@ -71,8 +71,16 @@ try:
         debugMsg(configFileData)
         #backup
         shutil.copy(MARLIN_PATH+configFile,MARLIN_PATH+configFile+".compile.bak")
+        
+        taskCount = 0
+        taskList = []
+
         # loop through 
         for profile in config['compile-profile']:
+            # update task list
+            task = {"name":profile['profile-name'],"status":False}
+            taskList.append(task)
+
             tmpConfigFileData = configFileData
             debugMsg(profile)
             print("Making " + configFile + " for " + profile['profile-name'])
@@ -95,7 +103,11 @@ try:
                     pass
                 #copy binary file
                 print("Copy binary output file to "+AUTO_COMPILE_DIR + profile['profile-name'] + "/" + "firmware.bin")
-                shutil.copy(".pioenvs/"+ ENVI_NAME +"/firmware.bin",AUTO_COMPILE_DIR + profile['profile-name'] + "/" + "firmware.bin")
+                try:
+                    shutil.copy(".pioenvs/"+ ENVI_NAME +"/firmware.bin",AUTO_COMPILE_DIR + profile['profile-name'] + "/" + "firmware.bin")
+                    taskList[taskCount]["status"] = True
+                except:
+                    print("Cannot save firmware.bin")
                  # also save the config file for preference
                 if SAVE_CONFIG_FILE:
                     try:
@@ -104,10 +116,13 @@ try:
                         print("Cannot save config file " + configFile + " for " + profile['profile-name'])
                 print("Cleanup build folder...")
                 os.system("platformio run --target clean -e "+ENVI_NAME)
+            taskCount += 1
 
-        # restore thr original config file
-        print("Restore the original "+configFile)
-        saveFile(MARLIN_PATH+configFile,configFileData)
+
+        print("\n\nBuild completed! :3")
+        # restore the original config file
+        print("Restore the original " + configFile + "...")
+        saveFile(MARLIN_PATH + configFile,configFileData)
         print("Cleanup build folder...")
         try:
             shutil.rmtree(".pioenvs")
@@ -115,8 +130,15 @@ try:
             shutil.rmtree(".piolibdeps")
         except:
             pass
-        print("Done :3")
-        print("Press ENTER to exit.")
+
+        print("")
+        for task in taskList:
+            if task["status"] == True:
+                print('{:<12}  {:<64}'.format("\033[1;32;40m Success \033[1;37;40m",task["name"]))
+            else:
+                print('{:<12}  {:<64}'.format("\033[1;31;40m Failed  \033[1;37;40m",task["name"]))
+
+        print("\nPress ENTER to exit.")
         input()
         sys.exit(0)
 except IOError as err:
