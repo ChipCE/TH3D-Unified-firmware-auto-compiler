@@ -98,9 +98,10 @@ try:
                 shutil.copy(".pioenvs/"+ ENVI_NAME +"/firmware.bin",AUTO_COMPILE_DIR + profile['profile-name'] + "/" + "firmware.bin")
                  # also save the config file for preference
                 if SAVE_CONFIG_FILE:
-                    saveFile(AUTO_COMPILE_DIR + profile['profile-name'] + "/" + configFile,tmpConfigFileData)
-                else:
-                    print("Cannot save config file " + configFile + " for " + profile['profile-name'])
+                    try:
+                        saveFile(AUTO_COMPILE_DIR + profile['profile-name'] + "/" + configFile,tmpConfigFileData)
+                    except:
+                        print("Cannot save config file " + configFile + " for " + profile['profile-name'])
                 print("Cleanup build folder...")
                 os.system("platformio run --target clean -e "+ENVI_NAME)
 
